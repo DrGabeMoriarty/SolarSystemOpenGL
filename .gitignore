@@ -252,3 +252,6 @@ Libraries/
 .idea/
 cmake-build-debug/
 CMakeLists.txt
+SolarSystemOpenGL.sln
+SolarSystemOpenGL.vcxproj
+SolarSystemOpenGL.vcxproj.filters
