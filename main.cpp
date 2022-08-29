@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
@@ -19,8 +19,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
 "}\n\0";
 
-int main()
-{
+int main() {
 	//Initializing GLFW
 	glfwInit();
 
@@ -30,8 +29,7 @@ int main()
 	//Telling GLFW that we are using the core profile (without outdated functions)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLfloat vertices[]
-	{
+	GLfloat vertices[] {
 		-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
 		0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
 		0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f
@@ -41,8 +39,7 @@ int main()
 	GLFWwindow* window = glfwCreateWindow(1280, 720, "Test Window", NULL, NULL);
 
 	//safety check
-	if (window == NULL)
-	{
+	if (window == NULL) {
 		std::cerr << "Wait this is not supposed to happen!" << std::endl;
 		glfwTerminate();
 	}
@@ -54,7 +51,7 @@ int main()
 	gladLoadGL();
 
 	//Specify the viewport of OpenGL in the window
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 1280, 720);
 
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -111,8 +108,7 @@ int main()
 	glfwSwapBuffers(window);
 
 	//the main while loop, kinda like the Update() function in Unity
-	while (!glfwWindowShouldClose(window))
-	{
+	while (!glfwWindowShouldClose(window)) {
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
