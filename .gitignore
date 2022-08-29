@@ -246,6 +246,6 @@ OpenGL-Project/Debug/OpenGL-Project.tlog/CL.read.1.tlog
 
 ####Manual Changes####
 
-#x64/
-#Libraries/
-#.vs/
+x64/
+Libraries/
+.vs/
