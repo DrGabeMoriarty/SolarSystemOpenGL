@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
@@ -42,7 +43,7 @@ int main()
 	//safety check
 	if (window == NULL)
 	{
-		std::cout << "Wait this is not supposed to happen!" << std::endl;
+		std::cerr << "Wait this is not supposed to happen!" << std::endl;
 		glfwTerminate();
 	}
 

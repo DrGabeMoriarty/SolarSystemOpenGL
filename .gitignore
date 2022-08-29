@@ -249,3 +249,6 @@ OpenGL-Project/Debug/OpenGL-Project.tlog/CL.read.1.tlog
 x64/
 Libraries/
 .vs/
+.idea/
+cmake-build-debug/
+CMakeLists.txt
