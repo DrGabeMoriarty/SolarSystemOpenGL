@@ -243,3 +243,9 @@ OpenGL-Project/Debug/OpenGL-Project.tlog/CL.read.1.tlog
 *.lastbuildstate
 *.tlog
 .vs/SolarSystemOpenGL/v17/Browse.VC.opendb
+
+####Manual Changes####
+
+x64/
+Libraries/
+.vs/
