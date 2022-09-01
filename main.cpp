@@ -7,24 +7,22 @@
 #include"VAO.h"
 #include"VBO.h"
 #include"EBO.h"
+#include"Texture.h"
  
 // Vertices coordinates
 GLfloat vertices[] =
-{ //               COORDINATES                  /     COLORS           //
-	-0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     1.0f, 0.0f,  0.0f, // Lower left corner
-	 0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.0f, 1.0f,  0.0f, // Lower right corner
-	 0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,     0.0f, 0.0f,  1.0f, // Upper corner
-	 0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     1.0f, 0.0f, 0.0f, // Inner right
-	 -0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.0f, 1.0f, 0.0f, // Inner left
-	 0.0f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.0f, 0.0,  1.0f  // Inner down
+{ //     COORDINATES     /        COLORS      /   TexCoord  //
+	-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+	-0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
+	 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
+	 0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
-	0, 4, 5, // Lower left triangle
-	3, 2, 4, // Lower right triangle
-	5, 3, 1 // Upper triangle
+	0, 2, 1, // Upper triangle
+	0, 3, 2 // Lower triangle
 };
 
 
@@ -40,8 +38,8 @@ int main()
 	// So that means we only have the modern functions
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Create a GLFWwindow object of 800 by 800 pixels, naming it "OpenGLTest"
-	GLFWwindow* window = glfwCreateWindow(800, 800, "openGLTest", NULL, NULL);
+	// Create a GLFWwindow object of x by y pixels, naming it "OpenGLTest"
+	GLFWwindow* window = glfwCreateWindow(1024, 1024, "openGLTest", NULL, NULL);
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -55,8 +53,8 @@ int main()
 	//Load GLAD so it configures OpenGL
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, 800, 800);
+	// In this case the viewport goes from x = 0, y = 0, to x = x1, y = y1
+	glViewport(0, 0, 1024, 1024);
 
 
 
@@ -77,6 +75,7 @@ int main()
 	// Links VBO attributes such as coordinates and colors to VAO
 	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
 	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	// Unbind all to prevent accidentally modifying them
 	VAO1.Unbind();
 	VBO1.Unbind();
@@ -85,6 +84,8 @@ int main()
 	// Gets ID of uniform called "scale"
 	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
+	Texture gigaGabe("testTextureGigaGabe.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
+	gigaGabe.texUnit(shaderProgram, "tex0", 0);
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -97,6 +98,8 @@ int main()
 		shaderProgram.Activate();
 		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
 		glUniform1f(uniID, 0.5f);
+		// Binds texture so that is appears in rendering
+		gigaGabe.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
@@ -113,6 +116,7 @@ int main()
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
+	gigaGabe.Delete();
 	shaderProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
