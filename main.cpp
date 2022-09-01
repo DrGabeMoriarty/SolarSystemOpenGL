@@ -2,6 +2,7 @@
 #include <cmath>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
+#include<stb/stb_image.h>
 
 #include"shaderClass.h"
 #include"VAO.h"
@@ -103,7 +104,7 @@ int main()
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6	, GL_UNSIGNED_INT, 0);
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
